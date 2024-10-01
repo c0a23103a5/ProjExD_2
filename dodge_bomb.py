@@ -29,6 +29,7 @@ def check_bound(obj_rct:  pg.Rect) -> tuple[bool, bool]:
         tate = False
     return yoko, tate
 
+
 def game_over(screen: pg.display):
     """
     引数：スクリーン
@@ -48,6 +49,22 @@ def game_over(screen: pg.display):
     pg.display.update()
     time.sleep(5)
 
+
+def change_bomb():
+    """
+    爆弾の速度と大きさのリストをまとめたタプルを返す関数
+    """
+    accs = [a for a in range(1, 11)]
+    bb_imgs = []
+    
+    for r in range(1, 11):
+        bb_img = pg.Surface((20*r, 20*r))
+        pg.draw.circle(bb_img, (255, 0, 0), (10*r, 10*r), 10*r)
+        bb_imgs.append(bb_img)
+    
+    return accs, bb_imgs
+
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -64,6 +81,7 @@ def main():
     #bb_rct.centery = random.randint(HEIGHT, 0)
     
     vx, vy = +5, +5  # 爆弾の速度
+    
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -96,7 +114,13 @@ def main():
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-(sum_mv[0]), -(sum_mv[1]))  # 端の処理（こうかとん）
         
-        bb_rct.move_ip((vx, vy))  # 爆弾の移動
+        bb_accs, bb_imgs = change_bomb()
+        avx = vx*bb_accs[min(tmr//500, 9)]
+        avy = vy*bb_accs[min(tmr//500, 9)]
+        bb_img = bb_imgs[min(tmr//500, 9)]
+        bb_img.set_colorkey((0, 0, 0))
+
+        bb_rct.move_ip((avx, avy))  # 爆弾の移動
         yoko, tate = check_bound(bb_rct)
         if not yoko:
             vx *= -1
