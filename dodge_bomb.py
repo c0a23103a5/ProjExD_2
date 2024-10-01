@@ -50,7 +50,11 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
-        screen.blit(bg_img, [0, 0]) 
+        screen.blit(bg_img, [0, 0])  # 背景描画
+        if kk_rct.colliderect(bb_rct):
+            #こうかとんと重なっていたらmain関数から脱出
+            print("GAME OVER")
+            return
 
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]  # (横移動量, 縦移動量)
