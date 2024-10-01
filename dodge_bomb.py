@@ -33,7 +33,7 @@ def check_bound(obj_rct:  pg.Rect) -> tuple[bool, bool]:
 def game_over(screen: pg.display):
     """
     引数：スクリーンオブジェクト
-    スクリーンにゲームオーバー画面を表示する関数
+    スクリーンにゲームオーバー画面を表示する
     """
     go_img = pg.Surface((WIDTH, HEIGHT))
     pg.draw.rect(go_img, (0, 0, 0), pg.Rect(0, 0, WIDTH, HEIGHT))
@@ -64,6 +64,7 @@ def change_bomb():
     
     return accs, bb_imgs
 
+
 def change_img():
     """
     rotozoomしたSurfaceの辞書を返す関数
@@ -81,6 +82,7 @@ def change_img():
         (5, -5) : pg.transform.rotozoom(pg.image.load("fig/3.png"), -315, 0.9), 
                 }
     return surfaces
+
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
@@ -145,7 +147,6 @@ def main():
         if not tate:
             vy *= -1
 
-        
         kk_img = kk_imgs[tuple(sum_mv)]
 
         screen.blit(kk_img, kk_rct)
