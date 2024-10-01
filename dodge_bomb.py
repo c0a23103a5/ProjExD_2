@@ -1,4 +1,5 @@
 import os
+import random
 import sys
 import pygame as pg
 
@@ -21,6 +22,14 @@ def main():
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 300, 200
+    bb_img = pg.Surface((20, 20))  # 空のSurface
+    pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)
+    bb_img.set_colorkey((0, 0, 0))
+    bb_rct = bb_img.get_rect()
+    bb_rct.center = random.randint(0, WIDTH), random.randint(0, HEIGHT)
+    #bb_rct.centerx = random.randint(0, WIDTH)
+    #bb_rct.centery = random.randint(HEIGHT, 0)
+    vx, vy = +5, +5  # 爆弾の速度
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -41,11 +50,14 @@ def main():
         #     sum_mv[0] += 5
         for key, tpl in DELTA.items():
             if key_lst[key]:
-                sum_mv[0] += tpl[0]  # 横座標
-                sum_mv[1] += tpl[1]  # 縦座標
+                sum_mv[0] += tpl[0]  # 横移動量
+                sum_mv[1] += tpl[1]  # 縦移動量
         
-        kk_rct.move_ip(sum_mv)  # 座標の移動
+        kk_rct.move_ip(sum_mv)  # こうかとんの移動
+        bb_rct.move_ip((vx, vy))  # 爆弾の移動
         screen.blit(kk_img, kk_rct)
+        screen.blit(bb_img, bb_rct)
+        
         pg.display.update()
         tmr += 1
         clock.tick(50)
