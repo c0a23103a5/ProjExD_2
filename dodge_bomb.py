@@ -64,6 +64,23 @@ def change_bomb():
     
     return accs, bb_imgs
 
+def change_img():
+    """
+    rotozoomしたSurfaceの辞書を返す関数
+    """
+    #kk_img = pg.transform.flip(pg.image.load("fig/3.png"), False, True)
+    surfaces = {
+        (0, 0) : pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9),
+        (5, 0) : pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9),
+        (5, 5) : pg.transform.rotozoom(pg.image.load("fig/3.png"), -45, 0.9),
+        (0, 5) : pg.transform.rotozoom(pg.image.load("fig/3.png"), -90, 0.9),
+        (-5, 5) : pg.transform.rotozoom(pg.image.load("fig/3.png"), -135, 0.9),
+        (-5, 0) : pg.transform.rotozoom(pg.image.load("fig/3.png"), -180, 0.9),
+        (-5, -5) : pg.transform.rotozoom(pg.image.load("fig/3.png"), -225, 0.9),
+        (0, -5) : pg.transform.rotozoom(pg.image.load("fig/3.png"), -270, 0.9),
+        (5, -5) : pg.transform.rotozoom(pg.image.load("fig/3.png"), -315, 0.9), 
+                }
+    return surfaces
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
@@ -72,6 +89,7 @@ def main():
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 300, 200
+    kk_imgs = change_img()
     bb_img = pg.Surface((20, 20))  # 空のSurface
     pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)
     bb_img.set_colorkey((0, 0, 0))
@@ -126,6 +144,9 @@ def main():
             vx *= -1
         if not tate:
             vy *= -1
+
+        
+        kk_img = kk_imgs[tuple(sum_mv)]
 
         screen.blit(kk_img, kk_rct)
         screen.blit(bb_img, bb_rct)
