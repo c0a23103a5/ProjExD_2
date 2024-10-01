@@ -30,7 +30,7 @@ def check_bound(obj_rct:  pg.Rect) -> tuple[bool, bool]:
     return yoko, tate
 
 
-def game_over(screen: pg.display):
+def game_over(screen: pg.display) -> None:
     """
     引数：スクリーンオブジェクト
     スクリーンにゲームオーバー画面を表示する
@@ -50,7 +50,7 @@ def game_over(screen: pg.display):
     time.sleep(5)
 
 
-def change_bomb():
+def change_bomb() -> tuple:
     """
     爆弾の速度と大きさのリストをまとめたタプルを返す関数
     """
@@ -65,7 +65,7 @@ def change_bomb():
     return accs, bb_imgs
 
 
-def change_img():
+def change_img() -> dict:
     """
     rotozoomしたSurfaceの辞書を返す関数
     """
@@ -82,6 +82,10 @@ def change_img():
         (5, -5) : pg.transform.rotozoom(pg.image.load("fig/3.png"), -315, 0.9), 
                 }
     return surfaces
+
+
+def tsuiju(x: int, y: int) -> tuple:
+    return None
 
 
 def main():
